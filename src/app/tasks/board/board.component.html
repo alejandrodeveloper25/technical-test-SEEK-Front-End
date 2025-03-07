@@ -1,1 +1,49 @@
-<p>board works!</p>
+<div class="container mt-5">
+    <h2 class="text-center">Tablero de Tareas</h2>
+    <button class="btn btn-success mb-3" (click)="openTaskForm()">Agregar Tarea</button>
+
+    <div class="row">
+        <div class="col-md-4" *ngFor="let status of dropListIds">
+            <div [ngClass]="status">
+                <h4 class="text-center">{{ status }}</h4>
+                <div class="task-column" cdkDropList [id]="'drop-list-' + status"
+                    [cdkDropListData]="tasksByStatus[status]" [cdkDropListConnectedTo]="dropListConnectedIds"
+                    (cdkDropListDropped)="onDrop($event)">
+
+                    <div class="task-card" *ngFor="let task of tasksByStatus[status]" cdkDrag [cdkDragData]="task">
+                        <div class="row">
+                            <div class="col-10">
+                                <h5>{{ task.title }}</h5>
+                                <p>{{ task.description }}</p>
+                                <span [ngClass]="'state-' + status">{{status}}</span>
+                            </div>
+                            <div class="col-2">
+                                <button class="btn btn-sm btn-primary" (click)="editTask(task)">
+                                    <i class="fas fa-edit"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal para Crear/Editar Tarea -->
+    <div *ngIf="applyViewModal" class="modal">
+        <div class="modal-content">
+            <h3>{{ selectedTask.id !== 0 ? 'Editar Tarea' : 'Nueva Tarea' }}</h3>
+            <input type="text" [(ngModel)]="selectedTask.title" placeholder="Título" class="form-control mb-2">
+            <textarea [(ngModel)]="selectedTask.description" placeholder="Descripción"
+                class="form-control mb-2"></textarea>
+            <div class="footer_buttoms">
+                <button class="btn btn-primary" (click)="saveTask()">Guardar</button>
+                <button class="btn btn-danger" *ngIf="selectedTask.id !== 0"
+                    (click)="deleteTask(selectedTask.id!)">Eliminar</button>
+                <button class="btn btn-secondary" (click)="closeTaskForm()">Cerrar</button>
+            </div>
+
+        </div>
+    </div>
+</div>

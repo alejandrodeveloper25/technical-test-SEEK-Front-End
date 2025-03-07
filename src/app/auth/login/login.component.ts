@@ -25,7 +25,8 @@ export class LoginComponent {
       const { email, password } = this.loginForm.value;
       this.authService.login(email, password).subscribe({
         next: (response) => {
-          this.authService.saveToken(response.token);
+          console.log(response);
+          this.authService.saveToken(response.data.token);
           this.router.navigate(['/tasks']); // Redirigir al tablero
         },
         error: (err) => {

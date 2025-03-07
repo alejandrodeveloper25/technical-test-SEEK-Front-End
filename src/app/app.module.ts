@@ -8,6 +8,7 @@ import { TasksModule } from './tasks/tasks.module';
 import { CoreModule } from './core/core.module';
 import { SharedModule } from './shared/shared.module';
 import { HttpClientModule } from '@angular/common/http';
+import { DragDropModule } from '@angular/cdk/drag-drop';
 
 @NgModule({
   declarations: [
@@ -20,7 +21,8 @@ import { HttpClientModule } from '@angular/common/http';
     AuthModule,
     TasksModule,
     CoreModule,
-    SharedModule
+    SharedModule,
+    DragDropModule
   ],
   providers: [],
   bootstrap: [AppComponent]

@@ -1,13 +1,8 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { Tarea } from '../models/global.interface';
 
-interface Task {
-  id?: number;
-  title: string;
-  description: string;
-  status: 'TODO' | 'IN_PROGRESS' | 'DONE';
-}
 
 @Injectable({
   providedIn: 'root'
@@ -23,20 +18,20 @@ export class TaskService {
     return { headers: new HttpHeaders({ Authorization: `Bearer ${localStorage.getItem('token')}` }) };
   }
 
-  getTasks(): Observable<Task[]> {
-    return this.http.get<Task[]>(this.apiUrl, this.getAuthHeaders());
+  getTasks(): Observable<any> {
+    return this.http.get<Tarea[]>(this.apiUrl, this.getAuthHeaders());
   }
 
-  getTaskById(task: Task): Observable<Task> {
-    return this.http.get<Task>(`${this.apiUrl}/${task.id}`, this.getAuthHeaders());
+  getTaskById(task: Tarea): Observable<Tarea> {
+    return this.http.get<Tarea>(`${this.apiUrl}/${task.id}`, this.getAuthHeaders());
   }
 
-  createTask(task: Partial<Task>): Observable<Task> {
-    return this.http.post<Task>(this.apiUrl, task, this.getAuthHeaders());
+  createTask(task: Partial<Tarea>): Observable<Tarea> {
+    return this.http.post<Tarea>(this.apiUrl, task, this.getAuthHeaders());
   }
 
-  updateTask(task: Task): Observable<Task> {
-    return this.http.put<Task>(`${this.apiUrl}/${task.id}`, task, this.getAuthHeaders());
+  updateTask(task: Tarea): Observable<Tarea> {
+    return this.http.put<Tarea>(`${this.apiUrl}/${task.id}`, task, this.getAuthHeaders());
   }
 
   deleteTask(taskId: number): Observable<void> {
